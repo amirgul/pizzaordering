@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script src="{% static "orders/js/checkout.js" %}"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static "orders/css/site.css" %}">
+    <link rel="stylesheet" href="{% static "orders/css/checkout.css" %}">
+    <title>Pizza</title>
+    <script type="text/javascript">
+      var token = "{{csrf_token}}";
+    </script>
+  </head>
+  <body>
+    <div id="header">
+    <table width="100%" cellspacing="0" cellpadding="0">
+      <tbody>
+        <tr>
+          <td style="background-color:green;" width="20%">&nbsp;</td>
+          <td width="60%">
+    	       <img height="140" src="{% static "orders/icns/pinoccio.gif" %}" alt="pinocchio"/>
+            <h1>Pinocchio's Pizza &amp; Subs</h1>
+            <h2>74 Winthrop Street<br />
+            Harvard Square<br />
+            617-876-4897</h2>
+          </td>
+          <td style="background-color:red;" width="20%">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div id="main">
+      <div id="summary_container" class="callout" >
+         <a href="{% url 'logout' %}">Exit</a>
+        <h4>Costumer Name: {{ user.username }}</h4>
+        <h5>Order Number: <span id="order_number"></span></h5>
+        <div id="order_summary_container" class="summary_div">
+          <table style="width:100%;">
+            <tbody id="ostable">
+            </tbody>
+          </table><hr>
+          <table style="width:100%; font-weight:bold;">
+            <tr >
+              <td style="width:90%;">Total:</td>
+              <td style="width:10%">$<span id="order_total">0</span></td>
+            </tr>
+          </table>
+        </div>
+        <div id="payment_info_container" class="summary_div">
+          <img id="pizza_gif" src="https://media.giphy.com/media/GRYk355fcaKJi/giphy.gif" style="width:10em;" alt="Italian Trulli"><br><br><br>
+
+          <span id="order_status" style="color:orange; font-weight:bold;"></span>
+          <button class="checkout_button" id="submit_order_button" onclick="submitOrder();">Submit Order</button><br>
+          <br>
+        </div>
+      </div>
+
+
+    </div>
+  </body>
+</html>

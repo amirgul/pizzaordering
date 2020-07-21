@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script src="{% static "orders/js/main.js" %}"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static "orders/css/site.css" %}">
+    <link rel="stylesheet" href="{% static "orders/css/main.css" %}">
+    <title>Pizza</title>
+  </head>
+  <body>
+    <div id="header">
+    <table width="100%" cellspacing="0" cellpadding="0">
+      <tbody>
+        <tr>
+          <td style="background-color:green;" width="20%">&nbsp;</td>
+          <td width="60%">
+    	       <img height="140" src="{% static "orders/icns/pinoccio.gif" %}" alt="pinocchio"/>
+            <h1>Pinocchio's Pizza &amp; Subs</h1>
+            <h2>74 Winthrop Street<br />
+            Harvard Square<br />
+            617-876-4897</h2>
+          </td>
+          <td style="background-color:red;" width="20%">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div id="main">
+      {% block body %}
+      {% endblock %}
+    </div>
+  </body>
+</html>

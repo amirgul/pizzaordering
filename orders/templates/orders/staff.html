@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static "orders/css/site.css" %}">
+    <link rel="stylesheet" href="{% static "orders/css/checkout.css" %}">
+    <script src="{% static "orders/js/staff.js" %}"></script>
+
+    <title>Pizza</title>
+    <script type="text/javascript">
+      var token = "{{csrf_token}}";
+    </script>
+  </head>
+  <body>
+    <div id="header">
+    <table width="100%" cellspacing="0" cellpadding="0">
+      <tbody>
+        <tr>
+          <td style="background-color:green;" width="20%">&nbsp;</td>
+          <td width="60%">
+    	       <img height="140" src="{% static "orders/icns/pinoccio.gif" %}" alt="pinocchio"/>
+            <h1>Pinocchio's Pizza &amp; Subs</h1>
+            <h2>74 Winthrop Street<br />
+            Harvard Square<br />
+            617-876-4897</h2>
+          </td>
+          <td style="background-color:red;" width="20%">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div id="main">
+      <div id="summary_container" class="callout" >
+         <!-- <a href="{% url 'logout' %}">Exit</a> -->
+        <h5>Logged in as Admin</h5>
+        <h3>Restaurant Orders</h3>
+        <div class="summary_div grid">
+          {% for an_order in Orders %}
+          {% if  an_order.ready == 'false'%}
+          <div class="callout grid_item">
+              Name: {{an_order.username}}, #{{an_order.id}}<br>Time: {{an_order.time}}
+              <ul>
+                {% for an_orderitem in OrderItem %}
+                  {% if an_orderitem.order == an_order %}
+                    <li>{{an_orderitem.quantity}} x {{an_orderitem.itemName}} </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+              <button class="checkout_button" value={{an_order.id}} onclick="markReady(this);">Order Ready</button>
+
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+
+    </div>
+  </body>
+</html>

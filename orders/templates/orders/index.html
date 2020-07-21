@@ -1,0 +1,127 @@
+{% extends "orders/base.html" %}
+{% block body %}
+<script type="text/javascript">
+   var message = "{{message}}";
+</script>
+<!-- LOGIN MODAL -->
+<div id="login_modal" class="modal2">
+  <form class="modal-content animate" action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+      <span onclick="close_login_modal();" class="close" title="Close Modal">&times;</span>
+    <div class="container">
+      <span id="login_fail_msg">Invalid Credentials!</span>
+
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="username" required><br>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="password" required>
+      <div style="text-align:center;">
+        <button type="submit" value="Login">Login</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span id="close_modal">&times;</span>
+      <h2>Order Summary</h2>
+    </div>
+    <div class="modal-body"><br>
+      <table style="width:100%;">
+        <tbody id="ostable">
+        </tbody>
+      </table><hr>
+      <table style="width:100%; font-weight:bold;">
+        <tr >
+          <td style="width:90%;">Total:</td>
+          <td style="width:10%">$<span id="order_total">0</span></td>
+        </tr>
+      </table>
+      <br>
+    </div>
+    <div class="modal-footer">
+      <button id="checkout_button" onclick="showLoginModal();">Checkout</button>
+    </div>
+  </div>
+</div>
+
+<table width="100%">
+  <tbody>
+    <tr>
+      <td width="50%">
+        <div class="callout">
+          <div>
+            <h2>Our Menu</h2> <button id="checkout_button2" onclick="updateOrderSummary();" style="display:none;">Shopping Cart</button>
+          </div>
+          {% for category in Items %}
+            <div class="internalmenunav">
+              {% for category in Items %}
+                <a href="#{{category}}">{{ category }}</a> |
+              {% endfor %}
+            </div>
+            <table width="100%" class="foodmenu">
+              <tbody>
+                <tr>
+                  <th colspan="3"><a name="{{ category }}">{{category}}</a>
+                  </th>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                {% for catType in ItemType %}
+                  {% if catType.itemName == category %}
+                  <tr>
+                    <td width="40%">{{catType.typeName}}</td>
+                    {% for size in ItemSize %}
+                      {% if size.typeName.typeName == catType.typeName and size.typeName.itemName == category %}
+                        {% if size.size == 'Small' %}
+                          <td width="30%">small ${{ size.price }}
+                            <span  data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to cart"  class="chtooltip">
+                              <a >
+                                <button class="add_to_cart" onclick="addToCart(this);" value="{{size}}">+</button>
+                              </a>
+                              </span>
+                          </td>
+                        {% elif size.size == 'Large' %}
+                          <td width="30%">large ${{ size.price }}
+                            <span  data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to cart"  class="chtooltip">
+                              <a >
+                                <button class="add_to_cart" onclick="addToCart(this);" value="{{size}}">+</button>
+                              </a>
+                            </span>
+                          </td>
+                        {% else %}
+                          <td width="60%">${{size.price}}
+                            <span  data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to cart"  class="chtooltip">
+                              <a >
+                                <button class="add_to_cart" onclick="addToCart(this);" value="{{size}}">+</button>
+                              </a>
+                            </span>
+                          </td>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                  </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          {% endfor %}
+          <div class="internalmenunav">
+            {% for category in Items %}
+              <a href="#{{category}}">{{ category }}</a> |
+            {% endfor %}
+          </div>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}
